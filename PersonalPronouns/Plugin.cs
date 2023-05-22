@@ -13,11 +13,16 @@ namespace PersonalPronouns
     {
         public void Awake()
         {
-            Harmony harmonyPatch = new Harmony(PluginInfo.GUID);
-            harmonyPatch.PatchAll(Assembly.GetExecutingAssembly());
+            if (gameObject.GetComponent<Network>() == null)
+            {
+                gameObject.AddComponent<Network>();
 
-            Utils.InitPronouns();
-            Zenjector.Install<MainInstaller>().OnProject();
+                Harmony harmonyPatch = new Harmony(PluginInfo.GUID);
+                harmonyPatch.PatchAll(Assembly.GetExecutingAssembly());
+
+                Utils.InitPronouns();
+                Zenjector.Install<MainInstaller>().OnProject();
+            }
         }
     }
 }

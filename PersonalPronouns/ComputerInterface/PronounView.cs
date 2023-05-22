@@ -82,7 +82,7 @@ namespace PersonalPronouns.ComputerInterface
             switch (key)
             {
                 case EKeyboardKey.Enter:
-                    if (Time.time >= (PronounSetTime + 10))
+                    if (Time.time >= (PronounSetTime + 4))
                     {
                         PronounSetTime = Time.time;
                         Utils.UpdatePronouns((Utils.PronounFirst)_selectionManagerFirstChoice.CurrentSelectionIndex, (Utils.PronounSecond)_selectionManagerSecondChoice.CurrentSelectionIndex);

@@ -1,8 +1,4 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
-using Photon.Realtime;
-using System;
-using System.Threading.Tasks;
+﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +16,9 @@ namespace PersonalPronouns.Scripts
 
             Utils.TryCreateLabel(Local, out PronounLabel);
             PronounLabel.text = ""; // Default since usually the player doesn't have the mod
+
             if (Local.IsMyPlayer()) SetPronouns(Utils.GeneratePronounString());
+            else if (photonView != null && !photonView.IsMine) Network.Instance.OnPlayerPropertiesUpdate(photonView.Owner, photonView.Owner.CustomProperties);
         }
 
         public void Update()
@@ -32,56 +30,18 @@ namespace PersonalPronouns.Scripts
         public void SetPronouns(string Pronouns)
         {
             if (Local.IsMyPlayer() && PhotonNetwork.InRoom)
-                SetPronounsNetworked(Pronouns);
+            {
+                Network.Instance.SetPronounsNetworked(Pronouns);
+                SetPronounsLocal(Pronouns);
+            }
             else if (Local.IsMyPlayer() && !PhotonNetwork.InRoom)
                 SetPronounsLocal(Pronouns);
-        }
-
-        public async override void OnJoinedRoom()
-        {
-            base.OnJoinedRoom();
-
-            await Task.Delay(500);
-            if (PhotonNetwork.InRoom) // Check if they're still in a room, anything could happen 
-                SetPronounsNetworked(Utils.GeneratePronounString());
         }
 
         public void SetPronounsLocal(string pronouns)
         {
             if (PronounLabel != null)
                 PronounLabel.text = pronouns.ToUpper();
-        }
-
-        public void SetPronounsNetworked(string pronouns)
-        {
-            Hashtable CustomProp = new Hashtable
-            {
-                { Utils.PronounKey(), pronouns }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(CustomProp);
-            SetPronounsLocal(pronouns);
-        }
-
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-        {
-            base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
-
-            try
-            {
-                if (targetPlayer.IsLocal) return;
-
-                PhotonView targetView = GorillaGameManager.instance.FindVRRigForPlayer(targetPlayer);
-                bool flag = targetView != null && targetView.TryGetComponent(out Client client);
-                if (flag)
-                {
-                    flag = changedProps.TryGetValue(Utils.PronounKey(), out var PronounObject);
-                    if (flag && PronounObject is string Pronouns) SetPronounsLocal(Pronouns);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError(string.Concat("Error attempting to get networked pronouns: ", ex.GetType().Name, "\n", ex.StackTrace));
-            }
         }
     }
 }
