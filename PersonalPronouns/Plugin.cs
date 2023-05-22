@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace PersonalPronouns
 {
+    [BepInDependency("tonimacaroni.computerinterface", "1.5.2")]
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
     public class Plugin : BaseUnityPlugin
     {
