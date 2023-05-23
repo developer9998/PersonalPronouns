@@ -68,6 +68,9 @@
     <Reference Include="PlayFab">
       <HintPath>$(GameAssemblyPath)\PlayFab.dll</HintPath>
     </Reference>
+    <Reference Include="ScoreboardAttributes">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\BepInEx\plugins\ScoreboardAttributes\ScoreboardAttributes.dll</HintPath>
+    </Reference>
     <Reference Include="System.EnterpriseServices">
       <HintPath>$(GameAssemblyPath)\System.EnterpriseServices.dll</HintPath>
     </Reference>

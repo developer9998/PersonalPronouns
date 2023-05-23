@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using ScoreboardAttributes.Scripts;
 
 namespace PersonalPronouns.Scripts
 {
@@ -24,7 +25,11 @@ namespace PersonalPronouns.Scripts
         public void Update()
         {
             // Mainly for GorillaShirts and obviously ingame sweaters & slingshots that move the nametag
-            if (PronounLabel != null) PronounLabel.transform.localPosition = new Vector3(PronounLabel.transform.localPosition.x, PronounLabel.transform.localPosition.y, Local.playerText.transform.localPosition.z);
+            if (PronounLabel != null)
+            {
+                PronounLabel.color = Local.playerText.color;
+                PronounLabel.transform.localPosition = new Vector3(PronounLabel.transform.localPosition.x, PronounLabel.transform.localPosition.y, Local.playerText.transform.localPosition.z);
+            }
         }
 
         public void SetPronouns(string Pronouns)
@@ -42,6 +47,12 @@ namespace PersonalPronouns.Scripts
         {
             if (PronounLabel != null)
                 PronounLabel.text = pronouns.ToUpper();
+        }
+
+        public override void OnJoinedRoom()
+        {
+            base.OnJoinedRoom();
+            if (Local.IsMyPlayer()) PlayerTexts.RegisterAttribute(PronounLabel.text, PhotonNetwork.LocalPlayer);
         }
     }
 }

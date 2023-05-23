@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using ScoreboardAttributes.Scripts;
 using System;
 using UnityEngine;
 
@@ -43,7 +44,10 @@ namespace PersonalPronouns.Scripts
                 if (targetView != null && targetView.TryGetComponent(out Client client))
                 {
                     if (changedProps.TryGetValue(Utils.PronounKey(), out var PronounObject) && PronounObject is string Pronouns)
+                    {
                         client.SetPronounsLocal(Pronouns);
+                        PlayerTexts.RegisterAttribute(Pronouns, PhotonNetwork.LocalPlayer);
+                    }
                 }
             }
             catch (Exception ex)
