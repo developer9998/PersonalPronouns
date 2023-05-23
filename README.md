@@ -1,4 +1,5 @@
-<img src="https://github.com/developer9998/PersonalPronouns/blob/main/Marketing/Preview.png?raw=true" width=52% height=52%>
+<img src="https://raw.githubusercontent.com/developer9998/PersonalPronouns/main/Marketing/Preview.png" width=52% height=52%>
+
 ## What is PersonalPronouns?
 PersonalPronouns is a mod for [Gorilla Tag](https://www.gorillatagvr.com/) that gives other players their own pronoun tags on their player. Other players using the mod will be able to see your own pronoun tag.<br>
 
