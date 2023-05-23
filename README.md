@@ -1,17 +1,21 @@
-<img src="https://github.com/developer9998/PersonalPronouns/blob/main/Marketing/ModPreview1.0.0.png?raw=true" width=60% height=60%>
+<div align="center">
+    <img src="https://raw.githubusercontent.com/developer9998/PersonalPronouns/main/Marketing/Preview.png" width=65% height=65%>
+    <br><br>
+    <a href="https://github.com/developer9998/PersonalPronouns/blob/main/LICENSE/">   
+    <img src="https://img.shields.io/github/license/developer9998/PersonalPronouns?label=License&style=for-the-badge"</img></a>
+    <a href="https://github.com/developer9998/PersonalPronouns/releases">
+    <img src="https://img.shields.io/github/downloads/developer9998/PersonalPronouns/total?style=for-the-badge"</img></a>
+    <a href="https://github.com/developer9998/PersonalPronouns/releases/latest">
+    <img src="https://img.shields.io/github/v/release/developer9998/PersonalPronouns?style=for-the-badge"</img></a>
+    <a href="https://discord.gg/dev9998">
+    <img src="https://img.shields.io/discord/989239017511989258?label=dev%27s%20discord&style=for-the-badge"</img></a>
+</div>
 
 ## What is PersonalPronouns?
-PersonalPronouns is a mod for [Gorilla Tag](https://www.gorillatagvr.com/) that gives other players their own pronoun tags on their player. Other players using the mod will be able to see your own pronoun tag. 
-
-## What pronouns are included?
-Currently, there are only four sets of pronouns you can pick, those being:<br>
-- He/Him
-- She/Her
-- They/Them
-- It/Its
+PersonalPronouns is a mod for [Gorilla Tag](https://www.gorillatagvr.com/) that gives other players their own pronoun tags on their player. Other players using the mod will be able to see your own pronoun tag.<br>
 
 ## How do I change my pronoun tag?
-You will need the [Computer Interface](https://github.com/ToniMacaroni/ComputerInterface) mod in order to change your pronoun tag. As stated previously there are currently only four sets of pronouns you can pick.
+You will need the [Computer Interface](https://github.com/ToniMacaroni/ComputerInterface) mod in order to change your pronoun tag.
 
 ## Disclaimer
 ###### Disclaimer sourced from [Gorilla Tag VR | Fan Content & Mod Policy](https://www.gorillatagvr.com/fan-content-mod-policy)
