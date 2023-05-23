@@ -17,7 +17,7 @@ namespace PersonalPronouns.Scripts
             Utils.TryCreateLabel(Local, out PronounLabel);
             PronounLabel.text = ""; // Default since usually the player doesn't have the mod
 
-            if (Local.IsMyPlayer()) SetPronouns(Utils.GeneratePronounString());
+            if (Local.IsMyPlayer()) SetPronouns(Utils.GetFullPronoun(Utils.CurrentPronouns));
             else if (photonView != null && !photonView.IsMine) Network.Instance.OnPlayerPropertiesUpdate(photonView.Owner, photonView.Owner.CustomProperties);
         }
 

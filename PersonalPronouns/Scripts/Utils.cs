@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using PersonalPronouns.Models;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,37 +11,83 @@ namespace PersonalPronouns.Scripts
 {
     public static class Utils
     {
-        public enum PronounFirst
+        public static List<Pronouns> Pronouns;
+
+        public static List<string> Subject = new List<string>();
+        public static int SubjectPronoun;
+
+        public static List<string> Object = new List<string>();
+        public static int ObjectPronoun;
+
+        public static List<string> Possessive = new List<string>();
+        public static int PossessivePronoun;
+
+        public static Pronouns CurrentPronouns;
+
+        public enum PronounType
         {
-            He,
-            She,
-            They,
-            It
+            Subject = 0,
+            Object = 1,
+            Possessive = 2
         }
 
-        public enum PronounSecond
+        public static void RegisterPronouns()
         {
-            Him,
-            Her,
-            Them,
-            Its
+            Pronouns = new List<Pronouns>();
+            Pronouns.Add(new Pronouns("He", "Him", "His"));
+            Pronouns.Add(new Pronouns("She", "Her", "Hers"));
+            Pronouns.Add(new Pronouns("They", "Them", "Theirs"));
+            Pronouns.Add(new Pronouns("It", "It", "Its"));
+
+            Pronouns.ForEach(pronoun =>
+            {
+                Subject.Add(pronoun.Subject);
+                Object.Add(pronoun.Object);
+                Possessive.Add(pronoun.Possessive);
+            });
         }
 
-        public static Dictionary<string, int> PronounDict = new Dictionary<string, int>()
+        public static void RecoverPronouns()
         {
-            { "He", 0 },
-            { "Him", 0 },
-            { "She", 1 },
-            { "Her", 1 },
-            { "They", 2 },
-            { "Them", 2 },
-            { "It", 3 },
-            { "Its", 3 },
-        };
+            var PronounPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Pronouns.json");
 
-        public static PronounFirst First;
-        public static PronounSecond Second;
+            if (File.Exists(PronounPath))
+            {
+                var pronouns = JsonUtility.FromJson<Pronouns>(File.ReadAllText(PronounPath));
+                CurrentPronouns = new Pronouns(pronouns.Subject, pronouns.Object, pronouns.Possessive);
+            }
+            else
+            {
+                CurrentPronouns = new Pronouns(GetPronoun(PronounType.Subject, 2), GetPronoun(PronounType.Object, 2), GetPronoun(PronounType.Possessive, 2));
+                var PronounContents = JsonUtility.ToJson(CurrentPronouns);
+                File.WriteAllText(PronounPath, PronounContents);
+            }
 
+            SubjectPronoun = Subject.IndexOf(CurrentPronouns.Subject);
+            ObjectPronoun = Object.IndexOf(CurrentPronouns.Object);
+            PossessivePronoun = Possessive.IndexOf(CurrentPronouns.Possessive);
+        }
+
+        public static void SavePronouns()
+        {
+            var PronounPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Pronouns.json");
+            var PronounContents = JsonUtility.ToJson(CurrentPronouns);
+            File.WriteAllText(PronounPath, PronounContents);
+        }
+
+        public static string GetPronoun(PronounType pronounType, int index)
+        {
+            var list = pronounType == PronounType.Subject ? Subject : (pronounType == PronounType.Object ? Object : Possessive);
+            return list[index];
+        }
+
+        public static string GetFullPronoun(Pronouns pronouns)
+        {
+            if (pronouns.Possessive == pronouns.Object)
+                return string.Concat(pronouns.Subject, "/", pronouns.Object);
+
+            return string.Concat(pronouns.Subject, "/", pronouns.Object, "/", pronouns.Possessive);
+        }
 
         public static bool TryCreateLabel(VRRig vrRig, out Text PronounLabel)
         {
@@ -50,12 +101,12 @@ namespace PersonalPronouns.Scripts
             if (vRRig != null)
             {
                 Text NametagLabel = vRRig.playerText;
-                GameObject PronounObject = Object.Instantiate(NametagLabel.gameObject, NametagLabel.transform.parent);
+                GameObject PronounObject = UnityEngine.Object.Instantiate(NametagLabel.gameObject, NametagLabel.transform.parent);
                 if (PronounObject.TryGetComponent(out PronounLabel))
                 {
                     Transform PronounTransform = PronounObject.transform;
                     PronounTransform.localPosition -= new Vector3(0, 7, 0);
-                    PronounTransform.localScale = Vector3.one * 0.6f;
+                    PronounTransform.localScale = Vector3.one * 0.4f;
                 }
             }
 
@@ -70,30 +121,33 @@ namespace PersonalPronouns.Scripts
 
         public static void InitPronouns()
         {
-            string Inital = PlayerPrefs.GetString(PronounKey(), "They/Them");
-            var Items = Inital.Split('/');
-            First = (PronounFirst)PronounDict[Items[0]];
-            Second = (PronounSecond)PronounDict[Items[1]];
-            Debug.Log(string.Concat("This cool monke goes by ", First, " / ", Second, " pronouns :3"));
+            RegisterPronouns();
+            RecoverPronouns();
 
-            PlayerPrefs.SetString(PronounKey(), GeneratePronounString());
-            PlayerPrefs.Save();
+            Debug.Log(string.Concat("Our pronouns are currently ", GetFullPronoun(CurrentPronouns)));
         }
 
-        public static string GeneratePronounString()
-            => string.Concat(First, "/", Second);
-
-        public static string GeneratePronounString(PronounFirst first, PronounSecond second)
-            => string.Concat(first, "/", second);
-
-        public static void UpdatePronouns(PronounFirst first, PronounSecond second)
+        public static void UpdatePronouns(int subjectIndex, int objectIndex, int possessiveIndex)
         {
-            var Pref = string.Concat(first, "/", second);
-            PlayerPrefs.SetString(PronounKey(), Pref);
-            PlayerPrefs.Save();
+            SubjectPronoun = subjectIndex;
+            ObjectPronoun = objectIndex;
+            PossessivePronoun = possessiveIndex;
+            CurrentPronouns = new Pronouns(Subject[SubjectPronoun], Object[ObjectPronoun], Possessive[PossessivePronoun]);
 
+            SavePronouns();
             if (GorillaTagger.Instance != null && GorillaTagger.Instance.offlineVRRig.TryGetComponent(out Client client))
-                client.SetPronouns(Pref);
+                client.SetPronouns(GetFullPronoun(CurrentPronouns));
+        }
+
+        public static PhotonView GetPhotonViewFromPlayer(Player viewOwner)
+        {
+            if (GorillaParent.instance != null && GorillaParent.instance.vrrigs is List<VRRig> userRigs && userRigs.Count > 0)
+            {
+                foreach (var rig in userRigs)
+                    if (rig.photonView != null && rig.photonView.Owner == viewOwner) return rig.photonView;
+            }
+
+            return null;
         }
     }
 }

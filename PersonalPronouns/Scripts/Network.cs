@@ -19,7 +19,7 @@ namespace PersonalPronouns.Scripts
         {
             base.OnJoinedRoom();
 
-            SetPronounsNetworked(Utils.GeneratePronounString());
+            SetPronounsNetworked(Utils.GetFullPronoun(Utils.CurrentPronouns));
         }
 
         public void SetPronounsNetworked(string pronouns)
@@ -42,7 +42,8 @@ namespace PersonalPronouns.Scripts
                 PhotonView targetView = GorillaGameManager.instance.FindVRRigForPlayer(targetPlayer);
                 if (targetView != null && targetView.TryGetComponent(out Client client))
                 {
-                    if (changedProps.TryGetValue(Utils.PronounKey(), out var PronounObject) && PronounObject is string Pronouns) client.SetPronounsLocal(Pronouns);
+                    if (changedProps.TryGetValue(Utils.PronounKey(), out var PronounObject) && PronounObject is string Pronouns)
+                        client.SetPronounsLocal(Pronouns);
                 }
             }
             catch (Exception ex)
