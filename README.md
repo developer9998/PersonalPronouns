@@ -1,17 +1,9 @@
-<img src="https://github.com/developer9998/PersonalPronouns/blob/main/Marketing/ModPreview1.0.0.png?raw=true" width=60% height=60%>
-
+<img src="https://github.com/developer9998/PersonalPronouns/blob/main/Marketing/Preview.png?raw=true" width=52% height=52%>
 ## What is PersonalPronouns?
-PersonalPronouns is a mod for [Gorilla Tag](https://www.gorillatagvr.com/) that gives other players their own pronoun tags on their player. Other players using the mod will be able to see your own pronoun tag. 
-
-## What pronouns are included?
-Currently, there are only four sets of pronouns you can pick, those being:<br>
-- He/Him
-- She/Her
-- They/Them
-- It/Its
+PersonalPronouns is a mod for [Gorilla Tag](https://www.gorillatagvr.com/) that gives other players their own pronoun tags on their player. Other players using the mod will be able to see your own pronoun tag.<br>
 
 ## How do I change my pronoun tag?
-You will need the [Computer Interface](https://github.com/ToniMacaroni/ComputerInterface) mod in order to change your pronoun tag. As stated previously there are currently only four sets of pronouns you can pick.
+You will need the [Computer Interface](https://github.com/ToniMacaroni/ComputerInterface) mod in order to change your pronoun tag.
 
 ## Disclaimer
 ###### Disclaimer sourced from [Gorilla Tag VR | Fan Content & Mod Policy](https://www.gorillatagvr.com/fan-content-mod-policy)
