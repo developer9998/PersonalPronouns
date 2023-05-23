@@ -87,7 +87,7 @@ namespace PersonalPronouns.ComputerInterface
             str.AppendClr(_selectionManager.GetIndicatedText(2, _selectionManager.CurrentSelectionIndex, Utils.GetPronoun(Utils.PronounType.Possessive, _possessiveManager.CurrentSelectionIndex)), TextColour(2));
             str.AppendClr($"<size={smallerFontSize}>  Current: {Utils.CurrentPronouns.Possessive}</size>", "ffffff50");
 
-            str.AppendLines(2)
+            str.AppendLines(3)
                 .AppendClr(!PronounsSet ? " * Press Enter to update your pronouns." : " * Pronouns have been updated.", "ffffff50")
                 .AppendLine();
 
