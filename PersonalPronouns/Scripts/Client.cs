@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
+using ScoreboardAttributes;
 using UnityEngine;
 using UnityEngine.UI;
-using ScoreboardAttributes.Scripts;
 
 namespace PersonalPronouns.Scripts
 {
