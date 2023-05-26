@@ -3,7 +3,7 @@ using PersonalPronouns.Scripts;
 
 namespace PersonalPronouns
 {
-    [HarmonyPatch(typeof(VRRig), "Start")]
+    [HarmonyPatch(typeof(VRRig), "SharedStart")]
     internal class Patch
     {
         internal static void Postfix(VRRig __instance)

@@ -12,7 +12,7 @@ namespace PersonalPronouns
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
     public class Plugin : BaseUnityPlugin
     {
-        public void Awake()
+        public void Start()
         {
             if (gameObject.GetComponent<Network>() == null)
             {
